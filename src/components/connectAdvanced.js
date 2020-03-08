@@ -120,6 +120,7 @@ export default function connectAdvanced(
 
   const Context = context
 
+  // 返回一个高级组件这个函数相当于 connect()
   return function wrapWithConnect(WrappedComponent) {
     if (process.env.NODE_ENV !== 'production') {
       invariant(
@@ -150,6 +151,7 @@ export default function connectAdvanced(
 
     const { pure } = connectOptions
 
+    // selector 函数：得到最终注入组件的props
     function createChildSelector(store) {
       // 返回一个可以融合 props 的函数
       return selectorFactory(store.dispatch, selectorFactoryOptions)

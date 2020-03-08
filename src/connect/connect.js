@@ -21,8 +21,16 @@ import defaultSelectorFactory from './selectorFactory'
   The resulting final props selector is called by the Connect component instance whenever
   it receives new props or store state.
  */
+// // 循环执行factories，factories 相当于一个函数数组
+// 这里的factories也就是mapStateToProps和mapDisPatchToProps两个文件中暴露出来的处理函数数组
 
+// 技巧：对于不同类型的参数去做不同的处理，可以使用这种类似match 分流的做法
+//      函数数组每个函数对应一种情况，并将处理结果返回
+//      如果结果合适，就返回中断对函数数组的循环。
 function match(arg, factories, name) {
+   // arg也就是mapStateToProps或者mapDispatchToProps
+    // 这里相当于将数组内的每个函数之星了一遍，
+    // 并将我们的mapToProps函数作为参数传进去
   for (let i = factories.length - 1; i >= 0; i--) {
     const result = factories[i](arg)
     if (result) return result

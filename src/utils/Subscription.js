@@ -11,7 +11,9 @@ const nullListeners = { notify() {} }
   总结：
     1、subscription 这个类的方法定义
     2、订阅和取消订阅 都用到了 try。。。。
-    3、发布只用调用 sub 订阅在本级的listener，而本级的订阅由上一级去notify
+      订阅是将本级挂载父级 Subscription 上，（❤❤❤❤）
+    3、发布只用调用 sub 订阅在本级的listener，而本级的订阅由上一级去 notify，
+      也就是说本级的 notify 不会触发本级的 onStateChange，而是由上级去调用
 */
 
 function createListenerCollection() {
@@ -96,7 +98,7 @@ export default class Subscription {
     if (!this.unsubscribe) {
       // 如果parentSub没传，那么使用store订阅，
       // 否则，调用context中获取的subscrption来订阅，保证都订阅到一个地方，具体会在下边说明,
-      // this.handleChangeWrapper 作为 listener ，并返回解绑的函数
+      //这里 this.handleChangeWrapper 作为 listener 添加到了，并返回解绑的函数
       this.unsubscribe = this.parentSub
         ? this.parentSub.addNestedSub(this.handleChangeWrapper)
         : this.store.subscribe(this.handleChangeWrapper)
