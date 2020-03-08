@@ -35,15 +35,32 @@ The React Redux docs are now published at **https://react-redux.js.org** .
 
 We're currently expanding and rewriting our docs content - check back soon for more updates!
 
+我们正在扩展和重写`docs`内容 - 快来看看更多的更新！
+
 ## How Does It Work?
 
 We do a deep dive on how React Redux works in [this readthesource episode](https://www.youtube.com/watch?v=VJ38wSFbM3A).  
 
+我们[在此](https://www.youtube.com/watch?v=VJ38wSFbM3A)深挖`React Redux`是如何工作的。
+
 Also, the post [The History and Implementation of React-Redux](https://blog.isquaredsoftware.com/2018/11/react-redux-history-implementation/) 
 explains what it does, how it works, and how the API and implementation have evolved over time.
 
+除此之外，[The History and Implementation of React-Redux](https://blog.isquaredsoftware.com/2018/11/react-redux-history-implementation/)这篇博客阐述了`React-Redux`做了什么、如何工作以及`API`和实现是如何随着时间演变
+
 Enjoy!
+
+使用愉快！
 
 ## License
 
 [MIT](LICENSE.md)
+
+## 源码阅读
+分为三个部分：
+
+- [X] `Provider` 的[注释](https://github.com/zhoushaokun/react-redux-7.1.1-/blob/master/src/components/Provider.js)
+- [X] `Subsription` 的[注释](https://github.com/zhoushaokun/react-redux-7.1.1-/blob/master/src/utils/Subscription.js)
+- [ ] `connect` 比较多
+  - [X] `connect` 表面封装层的[注释](https://github.com/zhoushaokun/react-redux-7.1.1-/blob/master/src/connect/connect.js)，即对 mapStateToProps/mapDisapatchToProps 的处理。
+  - [ ] `connectAdvanced`内部如何注入
