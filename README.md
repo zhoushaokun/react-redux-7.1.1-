@@ -64,3 +64,5 @@ Enjoy!
 - [ ] `connect` 比较多
   - [X] `connect` 表面封装层的[注释](https://github.com/zhoushaokun/react-redux-7.1.1-/blob/master/src/connect/connect.js)，即对 mapStateToProps/mapDisapatchToProps 的处理。
   - [ ] `connectAdvanced`内部如何注入
+    - [X] 首先由初始化的`initMapStateToProps`、`initMapDispatchToProps`、`initMergeProps` 构造 selector
+    - [ ] 由`selector`对 props 进行和并

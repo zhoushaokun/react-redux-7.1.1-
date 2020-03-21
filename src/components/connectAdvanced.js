@@ -149,11 +149,18 @@ export default function connectAdvanced(
       WrappedComponent
     }
 
+    // pure表示只有当state或者ownProps变动的时候，重新计算生成selector
     const { pure } = connectOptions
 
     // selector 函数：得到最终注入组件的props
+    /* 
+    在注入过程中，有一个很重要的东西：selectorFactory。这个函数就是生成selector的很重要的一环。
+    它起到一个上传下达的作用，把接收到的dispatch，以及那三个mapToProps函数，
+    传入到selectorFactory内部的处理函数
+    （pureFinalPropsSelectorFactory 或 impureFinalPropsSelectorFactory）中
+    */
     function createChildSelector(store) {
-      // 返回一个可以融合 props 的函数
+      // 返回一个可以融合 props 的函数: selector
       return selectorFactory(store.dispatch, selectorFactoryOptions)
     }
 

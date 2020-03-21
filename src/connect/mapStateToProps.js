@@ -6,6 +6,12 @@ export function whenMapStateToPropsIsFunction(mapStateToProps) {
     : undefined
 }
 
+// 如果 mapStateToProps 为空，返回 
+// function constantSelector() {
+//   return constant
+// }
+// 这样一个返回空对象的函数
+
 export function whenMapStateToPropsIsMissing(mapStateToProps) {
   return !mapStateToProps ? wrapMapToPropsConstant(() => ({})) : undefined
 }

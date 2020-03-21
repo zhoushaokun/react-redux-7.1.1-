@@ -7,6 +7,8 @@ export function wrapMapToPropsConstant(getConstant) {
     function constantSelector() {
       return constant
     }
+    // constantSelector.dependsOnOwnProps = false，
+    // 表示返回值与 connect 高阶组件接收到的props无关。
     constantSelector.dependsOnOwnProps = false
     return constantSelector
   }
@@ -19,6 +21,10 @@ export function wrapMapToPropsConstant(getConstant) {
 // A length of one signals that mapToProps does not depend on props from the parent component.
 // A length of zero is assumed to mean mapToProps is getting args via arguments or ...args and
 // therefore not reporting its length accurately..
+/* 
+  此时 mapToProps 已经被赋值为 mapStateToProps 或者 mapDispatchToProps
+  proxy.mapToProps = mapToProps
+*/
 export function getDependsOnOwnProps(mapToProps) {
   return mapToProps.dependsOnOwnProps !== null &&
     mapToProps.dependsOnOwnProps !== undefined
@@ -38,17 +44,24 @@ export function getDependsOnOwnProps(mapToProps) {
 //  * On first call, verifies the first result is a plain object, in order to warn
 //    the developer that their mapToProps function is not returning a valid result.
 //
+// 当 mapStateToProps 为函数，mapDispatch 为函数
 export function wrapMapToPropsFunc(mapToProps, methodName) {
   return function initProxySelector(dispatch, { displayName }) {
     const proxy = function mapToPropsProxy(stateOrDispatch, ownProps) {
       return proxy.dependsOnOwnProps
-        ? proxy.mapToProps(stateOrDispatch, ownProps)
-        : proxy.mapToProps(stateOrDispatch)
+      ? proxy.mapToProps(stateOrDispatch, ownProps)
+      : proxy.mapToProps(stateOrDispatch)
     }
-
+    
     // allow detectFactoryAndVerify to get ownProps
     proxy.dependsOnOwnProps = true
-
+    
+    /* 
+    初始化时 proxy.mapToProps 指的是 detectFactoryAndVerify ，
+    后续的执行过程中，
+      会先将proxy的mapToProps赋值为我们传入connect的mapStateToProps或者mapDispatchToProps，
+    然后在依照实际情况组件是否应该依赖自己的props赋值给dependsOnOwnProps。
+    */
     proxy.mapToProps = function detectFactoryAndVerify(
       stateOrDispatch,
       ownProps
